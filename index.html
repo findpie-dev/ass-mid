@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skincare E-commerce Navigation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: #8A2BE2;
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* Main Navigation Bar */
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            position: relative;
+        }
+
+        .nav-item > a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item:hover > a {
+            color: #2e7d32; /* Green accent color */
+        }
+
+        /* Mega Menu Dropdown */
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #eee;
+            padding: 25px 30px;
+            z-index: 100;
+        }
+
+        /* Display mega menu on hover */
+        .nav-item:hover .mega-menu {
+            display: flex;
+        }
+
+        /* Specific Menu Widths */
+        .skincare-menu {
+            width: 500px;
+            justify-content: space-between;
+        }
+
+        .sale-menu {
+            width: 320px;
+            justify-content: center;
+        }
+
+        .brand-menu {
+            width: 550px;
+            justify-content: space-between;
+        }
+
+        /* Columns Setup */
+        .menu-column {
+            flex: 1;
+            padding: 0 15px;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #222;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-list li {
+            margin-bottom: 6px;
+        }
+
+        .menu-list a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .menu-list a:hover {
+            color: #2e7d32;
+        }
+
+        /* Brand List Grid */
+        .brand-grid {
+            display: flex;
+            gap: 35px;
+        }
+
+        /* Banner Highlight Card for Sale Dropdown */
+        .promo-card {
+            background-color: #f4f8f5;
+            border: 1px solid #c8e6c9;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            color: #2e7d32;
+            width: 100%;
+        }
+
+        .promo-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .promo-card p {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* --- POPUP AD STYLES --- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-box {
+            background: #ffffff;
+            width: 420px;
+            padding: 35px 25px;
+            border-radius: 12px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popupAnimation 0.3s ease-out;
+        }
+
+        @keyframes popupAnimation {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .popup-badge {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .popup-title {
+            font-size: 24px;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        .popup-discount {
+            font-size: 38px;
+            font-weight: 800;
+            color: #8A2BE2;
+            margin-bottom: 10px;
+        }
+
+        .popup-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .popup-btn {
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+
+        .popup-btn:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Homepage Pop-up Ad -->
+    <div class="popup-overlay" id="popupAd">
+        <div class="popup-box">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <div class="popup-badge">Exclusive Offer</div>
+            <h2 class="popup-title">Pchum Ben Special</h2>
+            <div class="popup-discount">UP TO 50% OFF</div>
+            <p class="popup-description">Get up to 50% off all Korean & Asian Beauty brands for the upcoming Pchum Ben festival!</p>
+            <a href="#" class="popup-btn" onclick="closePopup()">SHOP THE SALE</a>
+        </div>
+    </div>
+
+    <!-- Top Announcement Bar -->
+    <div class="top-banner">
+        Sale: Up to 50% off all brands for upcoming Pchum Ben!
+    </div>
+
+    <!-- Header Navigation -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+
+            <!-- 1. Skincare Dropdown -->
+            <li class="nav-item">
+                <a href="#">Skincare</a>
+
+                <div class="mega-menu skincare-menu">
+                    <!-- Column 1: Hair Care & Body Care -->
+                    <div class="menu-column">
+                        <div class="menu-section">
+                            <h3 class="menu-title">Hair Care</h3>
+                            <ul class="menu-list">
+                                <li><a href="#">Hair Treatments</a></li>
+                                <li><a href="#">Shampoos</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-section">
+                            <h3 class="menu-title">Body Care</h3>
+                            <ul class="menu-list">
+                                <li><a href="#">Bath & Showers</a></li>
+                                <li><a href="#">Body Moisturizers</a></li>
+                                <li><a href="#">Deodorants (opt)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Column 2: Face Care -->
+                    <div class="menu-column">
+                        <div class="menu-section">
+                            <h3 class="menu-title"><a href="facecare.html">Face Care</a></h3>
+                            <ul class="menu-list">
+                                <li><a href="facecare/facecleansers.html">Face Cleansers</a></li>
+                                <li><a href="facecare/faceserums.html">Face Serums</a></li>
+                                <li><a href="facecare/moisturizers.html">Moisturizers</a></li>
+                                <li><a href="facecare/toners.html">Toners</a></li>
+                                <li><a href="facecare/sunscreen.html">Sunscreens</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 2. Sale Dropdown -->
+            <li class="nav-item">
+                <a href="#">Sale</a>
+                <div class="mega-menu sale-menu">
+                    <div class="promo-card">
+                        <h4>Pchum Ben Sale</h4>
+                        <p>Up to 50% off all brands for upcoming Pchum Ben!</p>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 3. Brand Dropdown -->
+            <li class="nav-item">
+                <a href="#">Brand</a>
+
+                <div class="mega-menu brand-menu">
+                    <div class="menu-column">
+                        <h3 class="menu-title">All Brands</h3>
+                        <div class="brand-grid">
+                            <ul class="menu-list">
+                                <li><a href="#">Anua</a></li>
+                                <li><a href="#">Beauty of Joseon</a></li>
+                                <li><a href="#">COSRX</a></li>
+                                <li><a href="#">IUNIK</a></li>
+                                <li><a href="#">LANEIGE</a></li>
+                            </ul>
+                            <ul class="menu-list">
+                                <li><a href="#">Medicube</a></li>
+                                <li><a href="#">Dr. Althea</a></li>
+                                <li><a href="#">Numbuzin</a></li>
+                                <li><a href="#">Goodal</a></li>
+                                <li><a href="#">Biodance</a></li>
+                                <li><a href="#">Mary & May</a></li>
+                            </ul>
+                            <ul class="menu-list">
+                                <li><a href="#">MIXSOON</a></li>
+                                <li><a href="#">Abib</a></li>
+                                <li><a href="#">Growus</a></li>
+                                <li><a href="#">UNOVE</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+
+    <!-- JavaScript to Close Pop-up -->
+    <script>
+        function closePopup() {
+            document.getElementById('popupAd').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
